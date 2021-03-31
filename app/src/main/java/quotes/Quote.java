@@ -4,7 +4,7 @@ public class Quote {
     String author;
     String text;
 
-    public Quote(String text, String author) {
+    public Quote(String author, String text) {
         this.author = author;
         this.text = text;
 
