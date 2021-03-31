@@ -7,7 +7,22 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class AppTest {
-    public 
+    @Test public void quoteTest () {
+        String testAuthor = "Vathew";
+        String testText = "We are the greatest evaaaaa";
+        String expected = String.format("This is the author: %s, this is the quote: %s", testAuthor, testText);
+        Quote newQuote = new Quote(testAuthor, testText);
+        String actual = newQuote.toString();
+        assertEquals(expected, actual);
+
+        String testAuthor2 = "Mictor";
+        String testText2 = "We are the greatest even mo bettah";
+        String expected2 = String.format("This is the author: %s, this is the quote: %s", testAuthor2, testText2);
+        Quote newQuote2 = new Quote(testAuthor2, testText2);
+        String actual2 = newQuote2.toString();
+        assertEquals(expected2, actual2);
+
+
 
     }
 }
