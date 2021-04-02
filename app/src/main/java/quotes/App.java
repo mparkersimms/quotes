@@ -3,25 +3,69 @@
  */
 package quotes;
 
+import com.google.common.net.HttpHeaders;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import sun.net.www.http.HttpClient;
 
-import java.io.File;
+import java.io.*;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class App {
 
 
     public static void main(String[] args) throws IOException {
-        Gson gson = new Gson();
-        File file = new File("app/src/test/resources/quotes.json");
-        FileReader reader = new FileReader(file);
-        Quote[] fileString =  gson.fromJson(reader, Quote[].class);
-        int arrayLength = fileString.length;
-        int rando = (int)(Math.random() * arrayLength);
-        System.out.println(fileString[rando]);
+//        Gson gson = new Gson();
+//        File file = new File("app/src/test/resources/quotes.json");
+//        FileReader reader = new FileReader(file);
+//        Quote[] fileString =  gson.fromJson(reader, Quote[].class);
+//        int arrayLength = fileString.length;
+//        int rando = (int)(Math.random() * arrayLength);
+//        System.out.println(fileString[rando]);
+//
+//        String urlString = "http://ron-swanson-quotes.herokuapp.com/v2/quotes/10";
+//        String urlString = "https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en";
+        String urlString = "https://zenquotes.io/api/random";
+        URL quoteUrl = new URL(urlString);
 
+
+
+        HttpURLConnection quoteConnection = (HttpURLConnection) quoteUrl.openConnection();
+        quoteConnection.setRequestMethod("GET");
+//        quoteConnection.setRequestProperty("X-TheySaidSo-Api-Secret","hello");
+//        quoteConnection.setRequestProperty("Content-type","application/json");
+        System.out.println("about to send request");
+//        quoteConnection.setAllowUserInteraction(false);
+//        quoteConnection.connect();
+        InputStreamReader inStreamReader = new InputStreamReader(quoteConnection.getInputStream());
+        BufferedReader bufferedReader = new BufferedReader(inStreamReader);
+        String quoteJSONInOneLine = bufferedReader.readLine();
+
+        System.out.println("request sent");
+        System.out.println(quoteJSONInOneLine);
+        Gson gson = new Gson();
+        quoteObject[] quotesResults = gson.fromJson(quoteJSONInOneLine, quoteObject[].class);
+        quoteFromAPI[] quoteArray = (quotesResults[0]);
+        System.out.println(quoteArray);
+
+            }
+
+    class quoteFromAPI{
+        public String quote;
+
+        public String toString(){
+            return String.format("Quote: %s",quote);
+        }
     }
+
+    class quoteObject{
+        quoteFromAPI q;
+    }
+
 }
