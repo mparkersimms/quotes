@@ -6,7 +6,7 @@ package quotes;
 import com.google.common.net.HttpHeaders;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import sun.net.www.http.HttpClient;
+
 
 import java.io.*;
 
@@ -14,6 +14,7 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 
@@ -36,36 +37,63 @@ public class App {
 
 
 
-        HttpURLConnection quoteConnection = (HttpURLConnection) quoteUrl.openConnection();
-        quoteConnection.setRequestMethod("GET");
+        HttpURLConnection apiQuoteConnection = (HttpURLConnection) quoteUrl.openConnection();
+        apiQuoteConnection.setRequestMethod("GET");
 //        quoteConnection.setRequestProperty("X-TheySaidSo-Api-Secret","hello");
 //        quoteConnection.setRequestProperty("Content-type","application/json");
         System.out.println("about to send request");
 //        quoteConnection.setAllowUserInteraction(false);
 //        quoteConnection.connect();
-        InputStreamReader inStreamReader = new InputStreamReader(quoteConnection.getInputStream());
+        InputStreamReader inStreamReader = new InputStreamReader(apiQuoteConnection.getInputStream());
         BufferedReader bufferedReader = new BufferedReader(inStreamReader);
+
         String quoteJSONInOneLine = bufferedReader.readLine();
 
+        System.out.println("this is bufferedReader" + bufferedReader);
         System.out.println("request sent");
-        System.out.println(quoteJSONInOneLine);
+        System.out.println("This is what comes back quoteJSONInOneLine" + quoteJSONInOneLine);
+
         Gson gson = new Gson();
         quoteObject[] quotesResults = gson.fromJson(quoteJSONInOneLine, quoteObject[].class);
-        quoteFromAPI[] quoteArray = (quotesResults[0]);
-        System.out.println(quoteArray);
+        System.out.println("This is quote object =>" + quoteObject[].class);
+//        quoteFromAPI[] quoteArray = (quotesResults[]);
+//        System.out.println("This is Arrays.toString" + Arrays.toString(quotesResults));
 
             }
 
-    class quoteFromAPI{
-        public String quote;
 
-        public String toString(){
-            return String.format("Quote: %s",quote);
+
+    public static String toString(Object[] a) {
+        if (a == null)
+            return "null";
+
+        int iMax = a.length - 1;
+        if (iMax == -1)
+            return "[]";
+
+        StringBuilder b = new StringBuilder();
+        b.append('[');
+        for (int i = 0; ; i++) {
+            b.append(String.valueOf(a[i]));
+            if (i == iMax)
+                return b.append(']').toString();
+            b.append(", ");
+            System.out.println(b.append(b.chars()));
         }
     }
 
-    class quoteObject{
-        quoteFromAPI q;
+    static class quoteFromAPI{
+        public String apiQuotes;
+
+        public String toString(){
+            return String.format("Quote:%s", apiQuotes);
+
+        }
+    }
+
+    static class quoteObject{
+
+
     }
 
 }

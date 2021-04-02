@@ -12,4 +12,6 @@ public class Quote {
     public String toString(){
         return String.format("This is the author: %s, this is the quote: %s", author, text);
     }
-}
+
+    }
+
