@@ -17,3 +17,9 @@
 ### Compile
 ### After Compiling, run using the green triangle in IntelliJ, or the run option in the program of your choice.
 
+## Day 2
+### After working for several hours we were unable to get the pull returned in parts that were seperated.
+### We will continue working on this.
+
+## Start Time 1430
+## End Time 1930
